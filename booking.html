@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: antiquewhite;
+            margin: 0;
+            padding: 20px;
+        }
+        .hotel-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .table-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .table {
+            width: 100px;
+            height: 100px;
+            background-color: #4CAF50;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+        .table.selected {
+            background-color: #45a049;
+        }
+        .booking-info {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+        }
+        .book-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="hotelName"></h1>
+    <img id="hotelImage" class="hotel-image" src="" alt="Hotel Image">
+    <div class="table-list" id="tableList"></div>
+    <div class="booking-info" id="bookingInfo" style="display:none;">
+        <h2>Booking Information</h2>
+        <p>Selected Tables: <span id="selectedTables"></span></p>
+        <p>Total Amount: $<span id="totalAmount"></span></p>
+        <p>Advance Amount: $<span id="advanceAmount"></span></p>
+        <button class="book-button" onclick="proceedToChairSelection()">Proceed to Chair Selection</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const hotelName = urlParams.get('hotel');
+        const imageSrc = urlParams.get('img');
+
+        document.getElementById('hotelName').textContent = hotelName;
+        document.getElementById('hotelImage').src = imageSrc;
+
+        const tableList = document.getElementById('tableList');
+        const bookingInfo = document.getElementById('bookingInfo');
+        const selectedTablesSpan = document.getElementById('selectedTables');
+        const totalAmountSpan = document.getElementById('totalAmount');
+        const advanceAmountSpan = document.getElementById('advanceAmount');
+
+        let selectedTables = [];
+
+        for (let i = 1; i <= 10; i++) {
+            const tableDiv = document.createElement('div');
+            tableDiv.className = 'table';
+            tableDiv.textContent = `Table ${i}`;
+            tableDiv.onclick = () => selectTable(i);
+            tableList.appendChild(tableDiv);
+        }
+
+        function selectTable(tableNumber) {
+            const tableIndex = selectedTables.indexOf(tableNumber);
+            if (tableIndex > -1) {
+                selectedTables.splice(tableIndex, 1);
+                document.getElementsByClassName('table')[tableNumber - 1].classList.remove('selected');
+            } else {
+                selectedTables.push(tableNumber);
+                document.getElementsByClassName('table')[tableNumber - 1].classList.add('selected');
+            }
+
+            updateBookingInfo();
+        }
+
+        function updateBookingInfo() {
+            if (selectedTables.length > 0) {
+                const totalAmount = selectedTables.length * (Math.floor(Math.random() * 100) + 50);
+                const advanceAmount = Math.floor(totalAmount * 0.2);
+
+                selectedTablesSpan.textContent = selectedTables.join(', ');
+                totalAmountSpan.textContent = totalAmount;
+                advanceAmountSpan.textContent = advanceAmount;
+
+                bookingInfo.style.display = 'block';
+            } else {
+                bookingInfo.style.display = 'none';
+            }
+        }
+
+        function proceedToChairSelection() {
+            const queryString = `tables=${selectedTables.join(',')}&hotel=${encodeURIComponent(hotelName)}&img=${encodeURIComponent(imageSrc)}`;
+            window.location.href = `tablebooking.html?${queryString}`;
+        }
+    </script>
+</body>
+</html>

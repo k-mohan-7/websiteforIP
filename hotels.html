@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotels</title>
+    <style>
+        body {
+            background-color: antiquewhite;
+            font-family: Arial, sans-serif;
+        }
+        .title {
+            background-color: antiquewhite;
+            border: solid antiquewhite;
+            border-radius: 13px;
+            padding: 20px;
+            width: auto;
+            text-align: center;
+        }
+        .menu {
+            background-color: rgb(145, 75, 75);
+            color: aliceblue;
+            text-align: justify;
+            border: solid none;
+            border-radius: 13px;
+            padding: 20px 20px;
+            overflow: hidden;
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu li {
+            float: left;
+            margin-left: 15%;
+        }
+        .menu li a {
+            color: aliceblue;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+        .menu li a:hover {
+            background-color: rgb(125, 65, 65);
+            border-radius: 13px;
+        }
+        .content h1 {
+            background-color: chocolate;
+            padding: 20px;
+            border: solid none;
+            margin: 20px 0;
+            border-radius: 13px;
+            color: white;
+        }
+        .locations, .trending-hotels {
+            background-color: rgb(181, 170, 143);
+            color: aliceblue;
+            text-align: justify;
+            border: solid none;
+            border-radius: 13px;
+            padding: 20px 20px;
+            overflow: hidden;
+            height: auto;
+            width: auto;
+            margin-bottom: 20px;
+        }
+        .locations ul, .trending-hotels ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        .locations li, .trending-hotels li {
+            margin: 0 10px;
+            text-align: center;
+        }
+        .locations img, .trending-hotels img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        figcaption {
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+            font-size: larger;
+            font-family: Verdana, sans-serif;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <h1>RESTAURANT RESERVATION</h1>
+    </div>
+    <div class="menu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="hotels.php">Hotels</a></li>
+            <li><a href="#" onclick="showFoodMessage()">Food</a></li>
+            <li><a href="#help">Help</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1>Top Locations</h1>
+        <div class="locations">
+            <ul>
+                <li>
+                    <img src="resturent1.webp" alt="Chennai" onclick="goToBooking('Chennai', 'resturent1.webp')">
+                    <figcaption>Chennai</figcaption>
+                </li>
+                <li>
+                    <img src="resturent2.jpg" alt="Hyderabad" onclick="goToBooking('Hyderabad', 'resturent2.jpg')">
+                    <figcaption>Hyderabad</figcaption>
+                </li>
+                <li>
+                    <img src="resturen3.jpg" alt="Bangalore" onclick="goToBooking('Bangalore', 'resturen3.jpg')">
+                    <figcaption>Bangalore</figcaption>
+                </li>
+            </ul>
+        </div>
+        <h1>Trending Hotels</h1>
+        <div class="trending-hotels">
+            <ul>
+                <li>
+                    <img src="resturent1.webp" alt="Luxury Palace Hotel" onclick="goToBooking('Luxury Palace Hotel', 'resturent1.webp')">
+                    <figcaption>Luxury Palace Hotel</figcaption>
+                </li>
+                <li>
+                    <img src="resturent2.jpg" alt="Sunset Beach Resort" onclick="goToBooking('Sunset Beach Resort', 'resturent2.jpg')">
+                    <figcaption>Sunset Beach Resort</figcaption>
+                </li>
+                <li>
+                    <img src="resturen3.jpg" alt="City Center Suites" onclick="goToBooking('City Center Suites', 'resturen3.jpg')">
+                    <figcaption>City Center Suites</figcaption>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function goToBooking(hotelName, imageSrc) {
+            window.location.href = `booking.html?hotel=${encodeURIComponent(hotelName)}&img=${encodeURIComponent(imageSrc)}`;
+        }
+
+        function showFoodMessage() {
+            alert("We're sorry, the Food section is currently under development. Please check back later!");
+        }
+    </script>
+</body>
+</html>

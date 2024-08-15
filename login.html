@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background-image: url(Resturent_background.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .login {
+            background-color: beige;
+            width: 400px;
+            padding: 20px;
+            margin: auto;
+            border-radius: 15px;
+        }
+        .hcolo {
+            color: rgb(86, 14, 14);
+            text-align: center;
+        }
+        button {
+            color: rgb(86, 14, 14);
+            background-color: rgb(210, 215, 217);
+            border: 1px solid beige;
+        }
+        #password {
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+        #btn1, #btn2 {
+            padding: 3px 50px;
+            border-radius: 5px;
+            margin-left: 30%;
+            font-weight: 800;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input {
+            margin-top: 5px;
+            padding: 5px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 50%;
+        }
+        .or {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+        <h1 class="hcolo">Login</h1>
+        <p style="color:rgb(80, 16, 16);font-weight: 500;text-align:center;">Restaurant Reservation</p>
+        <hr style="border-color:rgb(64, 10, 10);">
+     
+        <form action="index.html" method="get">
+            <label for="name">UserName:</label>
+            <input type="text" id="name" name="nam" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="pas" required>
+       
+            <div class="button-container">
+                <button type="submit" id="btn1">Login</button>
+                <p class="or">(or)</p>
+                <button type="button" id="btn2" onclick="location.href='signup.html'">Signup</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table and Chair Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: antiquewhite;
+            margin: 0;
+            padding: 20px;
+        }
+        .table {
+            width: 300px;
+            background-color: #8B4513;
+            margin: 40px auto;
+            border-radius: 20px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .chair-selection {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .chair {
+            width: 50px;
+            height: 50px;
+            background-color: #D2691E;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chair.selected {
+            background-color: #A52A2A;
+        }
+        .booking-info {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+        }
+        .book-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Table and Chair Selection</h1>
+    <div id="tables"></div>
+    <div class="booking-info">
+        <h2>Booking Information</h2>
+        <p>User: <?php echo htmlspecialchars($username); ?></p>
+        <p>Selected Tables: <span id="selectedTables"></span></p>
+        <p>Selected Chairs: <span id="selectedChairs"></span></p>
+        <p>Total Amount: $<span id="totalAmount"></span></p>
+        <p>Advance Amount: $<span id="advanceAmount"></span></p>
+        <button class="book-button" onclick="confirmBooking()">Confirm Booking</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const tables = urlParams.get('tables') ? urlParams.get('tables').split(',') : [];
+        const hotelName = urlParams.get('hotel') || 'Default Hotel';
+
+        const tablesDiv = document.getElementById('tables');
+        const selectedTablesSpan = document.getElementById('selectedTables');
+        const selectedChairsSpan = document.getElementById('selectedChairs');
+        const totalAmountSpan = document.getElementById('totalAmount');
+        const advanceAmountSpan = document.getElementById('advanceAmount');
+
+        let selectedChairs = {};
+
+        tables.forEach(tableNum => {
+            const tableDiv = document.createElement('div');
+            tableDiv.className = 'table';
+            tableDiv.innerHTML = `<h2>Table ${tableNum}</h2>`;
+
+            const chairSelectionDiv = document.createElement('div');
+            chairSelectionDiv.className = 'chair-selection';
+
+            for (let i = 0; i < 4; i++) {
+                const chairDiv = document.createElement('div');
+                chairDiv.className = 'chair';
+                chairDiv.onclick = () => selectChair(tableNum, i + 1);
+                chairSelectionDiv.appendChild(chairDiv);
+            }
+
+            tableDiv.appendChild(chairSelectionDiv);
+            tablesDiv.appendChild(tableDiv);
+        });
+
+        function selectChair(tableNum, chairNum) {
+            const key = `${tableNum}-${chairNum}`;
+            const chair = document.querySelector(`.table:nth-child(${tables.indexOf(tableNum) + 1}) .chair:nth-child(${chairNum})`);
+
+            if (selectedChairs[key]) {
+                delete selectedChairs[key];
+                chair.classList.remove('selected');
+            } else {
+                selectedChairs[key] = true;
+                chair.classList.add('selected');
+            }
+
+            updateBookingInfo();
+        }
+
+        function updateBookingInfo() {
+            const chairCount = Object.keys(selectedChairs).length;
+            const totalAmount = tables.length * 50 + chairCount * 10;
+            const advanceAmount = Math.floor(totalAmount * 0.2);
+
+            selectedTablesSpan.textContent = tables.join(', ');
+            selectedChairsSpan.textContent = Object.keys(selectedChairs).join(', ');
+            totalAmountSpan.textContent = totalAmount;
+            advanceAmountSpan.textContent = advanceAmount;
+        }
+
+        function confirmBooking() {
+            const bookingData = new FormData();
+            bookingData.append('username', '<?php echo $username; ?>');
+            bookingData.append('hotel', hotelName);
+            bookingData.append('tables', JSON.stringify(tables));
+            bookingData.append('chairs', JSON.stringify(Object.keys(selectedChairs)));
+            bookingData.append('totalAmount', totalAmountSpan.textContent);
+            bookingData.append('advanceAmount', advanceAmountSpan.textContent);
+
+            fetch('tablebooking.php', {
+                method: 'POST',
+                body: bookingData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                alert('Booking confirmed! Redirecting to homepage...');
+                window.location.href = 'index.html';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        updateBookingInfo();
+    </script>
+</body>
+</html>

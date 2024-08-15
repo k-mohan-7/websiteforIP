@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Reservation - Homepage</title>
+    <style>
+        body {
+            background-color: antiquewhite;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: rgb(145, 75, 75);
+            color: aliceblue;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .login-time {
+            font-size: 14px;
+        }
+        .login-button {
+            background-color: rgb(210, 215, 217);
+            color: rgb(86, 14, 14);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .login-button:hover {
+            background-color: rgb(190, 195, 197);
+        }
+        .title {
+            background-color: antiquewhite;
+            border: solid antiquewhite;
+            border-radius: 13px;
+            padding: 20px;
+            width: auto;
+            text-align: center;
+        }
+        .menu {
+            background-color: rgb(145, 75, 75);
+            color: aliceblue;
+            text-align: justify;
+            border: solid none;
+            border-radius: 13px;
+            padding: 20px 20px;
+            overflow: hidden;
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu li {
+            float: left;
+            margin-left: 15%;
+        }
+        .menu li a {
+            color: aliceblue;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+        .menu li a:hover {
+            background-color: rgb(125, 65, 65);
+            border-radius: 13px;
+        }
+        .content h1 {
+            background-color: chocolate;
+            padding: 20px;
+            border: solid none;
+            margin: 0px;
+            border-radius: 13px;
+            float: left;
+            margin-right: 100%;
+            color: white;
+        }
+        .home, .food {
+            background-color: rgb(181, 170, 143);
+            color: aliceblue;
+            text-align: justify;
+            border: solid none;
+            border-radius: 13px;
+            padding: 20px 20px;
+            overflow: hidden;
+            height: auto;
+            width: auto;
+            margin-top: 20px;
+        }
+        .home ul, .food ul {
+            list-style-type: none;
+            padding: 0px;
+            margin: 0px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .home li, .food li {
+            margin: 0 10px;
+            text-align: center;
+        }
+        .home figcaption, .food figcaption {
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+            font-size: larger;
+            font-family: Verdana, sans-serif;
+            margin-top: 10px;
+        }
+        img {
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Restaurant Reservation</div>
+        <div class="login-time" id="loginTime"></div>
+        <button class="login-button" onclick="goToLogin()">Login</button>
+    </div>
+    <div class="title">
+        <h1>RESTAURANT RESERVATION</h1>
+    </div>
+    <div class="menu">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="hotels.html">Hotels</a></li>
+            <li><a href="#" onclick="showFoodMessage()">Food</a></li>
+            <li><a href="#help">Help</a></li>
+        </ul>
+    </div>
+    <div class="content">
+         <h1>Trending Hotels</h1>
+        <div class="home">
+           <ul>
+                <li><img src="resturent1.webp" height="300" width="450" onclick="goToHotels('Shubham Hotel')"><figcaption>Shubham Hotel</figcaption></li>
+                <li><img src="resturent2.jpg" height="300" width="450" onclick="goToHotels('Hotel Taj')"><figcaption>Hotel Taj</figcaption></li>
+                <li><img src="resturen3.jpg" height="300" width="450" onclick="goToHotels('Arabian Desert')"><figcaption>Arabian Desert</figcaption></li>
+            </ul>
+        </div>
+        <h1>Trending Food</h1>
+        <div class="food">
+            <ul> 
+                <li><img src="Biryani.jpeg" height="300" width="450" onclick="showFoodInfo('Biryani')"><figcaption>Biryani</figcaption></li>
+                <li><img src="meals.jpg" height="300" width="450" onclick="showFoodInfo('Meals')"><figcaption>Meals</figcaption></li>
+                <li><img src="Idly.jpg" height="300" width="450" onclick="showFoodInfo('Idly')"><figcaption>Idly</figcaption></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function goToLogin() {
+            window.location.href = 'login.html';
+        }
+
+        function goToHotels(hotelName) {
+            window.location.href = `hotels.html?hotel=${encodeURIComponent(hotelName)}`;
+        }
+
+        function showFoodMessage() {
+            alert("We're sorry, the Food section is currently under development. Please check back later!");
+        }
+
+        function showFoodInfo(foodName) {
+            alert(`You clicked on ${foodName}. But Food section is currently under development. Please check back later!`);
+        }
+
+        function updateLoginTime() {
+            const now = new Date();
+            document.getElementById('loginTime').textContent = `Current Time: ${now.toLocaleTimeString()}`;
+        }
+
+        updateLoginTime();
+        setInterval(updateLoginTime, 1000);
+    </script>
+</body>
+</html>
